@@ -8,30 +8,21 @@ using System.Text.Json;
 
 namespace MasterUniversityFE.Controllers
 {
-    public class SQLController : Controller
+    public class NoSQLController : Controller
     {
-        public string _ApiPerformance;
-        public IActionResult SQL()
+        public IActionResult NoSQL()
         {
             return View();
         }
 
-        public void SQLBase(IConfiguration cfg)
-        {
-            if (cfg != null)
-            {
-                _ApiPerformance = cfg.GetSection("APIURL:_ApiPerformance").Value;
-            }
-        }
-
         [HttpPost]
-        public async Task<IActionResult> SQLPerformance(int TestCases)
+        public async Task<IActionResult> NoSQLPerformance(int TestCases)
         {
             try
             {
                 {
                     HttpResponseMessage apiResponse;
-                    apiResponse = await PerformanceComparisonAsync(TestCases);
+                    apiResponse = await NoSQLPerformanceComparisonAsync(TestCases);
                     if (apiResponse.StatusCode == HttpStatusCode.OK)
                     {
                         var JSON = (await apiResponse.Content.ReadAsStringAsync());
@@ -57,15 +48,15 @@ namespace MasterUniversityFE.Controllers
             return View();
         }
 
-        private async Task<HttpResponseMessage> PerformanceComparisonAsync(int TestCases)
+        private async Task<HttpResponseMessage> NoSQLPerformanceComparisonAsync(int testCases)
         {
             try
             {
                 HttpResponseMessage response = new HttpResponseMessage();
-                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(testCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
                 var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
                 using HttpClient httpClient = new HttpClient();
-                return response = await httpClient.PostAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/testInsert/" + TestCases),content);
+                return response = await httpClient.PostAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/testInsert/" + testCases), content);
             }
             catch (Exception ex)
             {

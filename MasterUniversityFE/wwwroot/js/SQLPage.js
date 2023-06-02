@@ -1,43 +1,42 @@
-﻿/* fetch('https://localhost:7218/api/PerformanceComparison/testInsert/1', {
-    mode: 'no-cors',
-    method: "post",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify(1)
-})
-*/
- //   .then(res => res.json())
- //   .then(data=>console.log(data))
-//'data': JSON.stringify({ "baseItemId": "2" }),
-
-
-
-
-/*fetch('https://localhost:7218/api/PerformanceComparison/testInsert/1000')
-    .then(response => {
-        console.log(response);
-    })
-    .then(data => {
-        console.log(data);
-    });
-    */
-
+﻿
 $("#buttonPerfSQL").click(function () {
-    buttonPerfSQL();
+    if ($('#dataAmount').val() == null) {
+        alert("Please choose valid data amount")
+    }
+    else {
+        buttonPerfSQL();
+}
+   
 });
 function buttonPerfSQL() {
-    var data =
-    {
-        'DataAmount': $('#dataAmount').val(),
-    }
-    console.log(data);
-    data = {'Data': JSON.stringify(data) };
+    var TestCases = $('#dataAmount').val()
+    console.log(TestCases);
                $.ajax({
                     method: "POST",
-                    url: '/SQL/SQLPerformance',
-                    data: data,
-                    "datatype": "json"
-                }); 
-            }
+                   url: '/SQL/SQLPerformance',
+                   data: {TestCases: TestCases},
+                   dataType: "json",
+                   async : false,
+               })
+                   .done(function (data) {
+                       console.log(data);
+                        JSON.stringify(data);
+                       console.log(data.averageTime);
+                       console.log(data.dataProcessed);
+                       console.log(data.hours);
+                       console.log(data.miliSeconds);
+                       console.log(data.minutes);
+                       console.log(data.seconds);
+
+                       $('#perfresultsdata').html('Data Processed : ' + data.dataProcessed);
+                       $('#perfresultshour').html('Hours : ' + data.hours);
+                       $('#perfresultsminute').html('Minutes : ' + data.minutes);
+                       $('#perfresultssec').html('Seconds : ' + data.seconds);
+                       $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
+                       $('#perfresults').html('Average Time : ' + data.averageTime);
+                   })
+}
+
+
+
 
