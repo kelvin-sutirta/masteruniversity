@@ -23,11 +23,38 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SQL" asp-action="SQL">SQL</a>
+                        <li class="nav-item sqldropdown"> SQL
+                         <ul class="isi-sqldropdown">
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SQL" asp-action="SQL">Insert</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="NoSQL" asp-action="NoSQL">NoSQL</a>
+                         <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SQL" asp-action="SQLUpdate">Update</a>
+                        </li>                       
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SQL" asp-action="SQLGet">Get</a>
+                        </li>                       
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SQL" asp-action="SQLDelete">Delete</a>
+                        </li>
+                            </ul>
+                        </li>
+                         <li class="nav-item nosqldropdown">NoSQL
+                         <ul class="isi-nosqldropdown">
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="NoSQL" asp-action="NoSQL">Insert</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="NoSQL" asp-action="NoSQLUpdate">Update</a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="NoSQL" asp-action="NoSQLGet">Get</a>
+                        </li>
+                         <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="NoSQL" asp-action="NoSQLDelete">Delete</a>
+                        </li>
+
+                            </ul>
                         </li>
                     </ul>
                 </div>

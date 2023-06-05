@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Performance Test Insert SQL";
+    ViewData["Title"] = "Performance Test Get NoSQL";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>This is SQL Insert Performance Page.</p>
+<p>This is NoSQL Get Performance Page.</p>
 
 <div class="shadow-sm tbl-1 p-3 mb-5" style="background : #F1F1F1;">
     <div class="card card-custom">
@@ -20,7 +20,7 @@
                     <option value="100000">100000</option>
                     </select>
                   <div>
-                <button id="buttonPerfSQL" type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light" onclick="buttonPerfSQL">Submit</button>
+                <button id="buttonPerfGetNoSQL" type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light" onclick="buttonPerfSQL">Submit</button>
                 </div>
                 <div id="perfresultsdata"> </div>
                 <div id="perfresultshour"> </div>
@@ -28,12 +28,11 @@
                 <div id="perfresultssec"> </div>
                 <div id="perfresultsmilisec"> </div>
                 <div id="perfresults"> </div>
-
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts{
-    <script type="text/javascript" src="~/js/SQLPage.js"></script>
+    <script type="text/javascript" src="~/js/NoSQLPage.js"></script>
 }
