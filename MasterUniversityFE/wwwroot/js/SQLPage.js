@@ -3,11 +3,23 @@ $("#buttonPerfSQL").click(function () {
     if ($('#dataAmount').val() == null) {
         alert("Please choose valid data amount")
     }
-    else {
-        buttonPerfSQL();
+    else {    
+      buttonPerfSQL();      
 }
    
 });
+
+/*function buttonLoading(elem) {
+    $(elem).attr("data-original-text", $(elem).html());
+    $(elem).prop("disabled", true);
+    $(elem).html('<i class="spinner-border spinner-border-sm"></i> Loading...');
+    
+}
+function buttonAfterLoading(elem) {
+    $(elem).prop("disabled", false);
+    $(elem).html($(elem).attr("data-original-text"));
+}
+*/
 function buttonPerfSQL() {
     var TestCases = $('#dataAmount').val()
     console.log(TestCases);
@@ -35,7 +47,36 @@ function buttonPerfSQL() {
                        $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
                        $('#perfresults').html('Average Time : ' + data.averageTime);
                    })
+
+    SQLInsertList();
 }
+function SQLInsertList() {
+    var TestCases = $('#dataAmount').val()
+    $("#tblSQLInsertList").DataTable({
+        "destroy": true,
+        "processing": true,
+        "pageLength": 5,
+        "ajax": {
+            "url": '/SQL/ListSQLInsert',
+            "data": { TestCases: TestCases },
+        },
+        "columns": [
+            { data: 'id', visible: false },
+            { data: 'dataProcessed' },
+            { data: 'hours' },
+            { data: 'minutes' },
+            { data: 'seconds' },
+            { data: 'miliSeconds' },
+            { data: 'averageTime' },
+        ],
+        "order": [[0, "desc"]],
+        "paging": true,
+        "pagingType": "simple_numbers",
+        "searching": false,
+        "info": false
+    });
+}
+
 
 
 
@@ -75,6 +116,32 @@ function buttonPerfUpdateSQL() {
             $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
             $('#perfresults').html('Average Time : ' + data.averageTime);
         })
+
+    SQLUpdateList();
+}
+function SQLUpdateList() {
+    var TestCases = $('#dataAmount').val()
+    $("#tblSQLUpdateList").DataTable({
+        "destroy": true,
+        "processing": true,
+        "pageLength": 5,
+        "ajax": {
+            "url": '/SQL/ListSQLUpdate',
+            "data": { TestCases: TestCases },
+        },
+        "columns": [
+            { data: 'dataProcessed' },
+            { data: 'hours' },
+            { data: 'minutes' },
+            { data: 'seconds' },
+            { data: 'miliSeconds' },
+            { data: 'averageTime' },
+        ],
+        "paging": true,
+        "pagingType": "simple_numbers",
+        "searching": false,
+        "info": false
+    });
 }
 
 
@@ -115,6 +182,31 @@ function buttonPerfGetSQL() {
             $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
             $('#perfresults').html('Average Time : ' + data.averageTime);
         })
+    SQLGetList();
+}
+function SQLGetList() {
+    var TestCases = $('#dataAmount').val()
+    $("#tblSQLGetList").DataTable({
+        "destroy": true,
+        "processing": true,
+        "pageLength": 5,
+        "ajax": {
+            "url": '/SQL/ListSQLGet',
+            "data": { TestCases: TestCases },
+        },
+        "columns": [
+            { data: 'dataProcessed' },
+            { data: 'hours' },
+            { data: 'minutes' },
+            { data: 'seconds' },
+            { data: 'miliSeconds' },
+            { data: 'averageTime' },
+        ],
+        "paging": true,
+        "pagingType": "simple_numbers",
+        "searching": false,
+        "info": false
+    });
 }
 
 
@@ -155,4 +247,68 @@ function buttonPerfDeleteSQL() {
             $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
             $('#perfresults').html('Average Time : ' + data.averageTime);
         })
+    SQLDeleteList();
 }
+function SQLDeleteList() {
+    var TestCases = $('#dataAmount').val()
+    $("#tblSQLDeleteList").DataTable({
+        "destroy": true,
+        "processing": true,
+        "pageLength": 5,
+        "ajax": {
+            "url": '/SQL/ListSQLDelete',
+            "data": { TestCases: TestCases },
+        },
+        "columns": [
+            { data: 'dataProcessed' },
+            { data: 'hours' },
+            { data: 'minutes' },
+            { data: 'seconds' },
+            { data: 'miliSeconds' },
+            { data: 'averageTime' },
+        ],
+        "paging": true,
+        "pagingType": "simple_numbers",
+        "searching": false,
+        "info": false
+    });
+}
+
+/*function SQLInsertList() {
+    var TestCases = $('#dataAmount').val()
+    console.log(TestCases);
+    $("#tblSQLInsertList").DataTable({
+        "destroy": true,
+        "processing": true,
+        "searching": false,
+        "paging":false,
+        "ajax": {
+            "url": '/SQL/ListSQLInsert',
+            "type": "GET",
+            "data": { TestCases: TestCases },
+            "datatype": "json",
+            "datasrc":"",
+        },
+        "columns": [
+            { data: 'id' },
+            { data: 'hours' },
+            { data: 'minutes' },
+            { data: 'second' },
+            { data: 'miliseconds' },
+            { data: 'dataProcessed' },
+            { data: 'averageTime' },
+        ],
+        "paging": false,
+        "pageLength": 5,
+    });
+}
+*/
+$(document).ready(function () {
+    $('#dataAmount').val(1000);
+    SQLInsertList();
+    $('#dataAmount').val(null);
+});
+
+
+
+

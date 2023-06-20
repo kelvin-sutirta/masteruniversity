@@ -216,5 +216,149 @@ namespace MasterUniversityFE.Controllers
         }
         #endregion
 
+        #region getall function
+        public async Task<HttpResponseMessage> GetAllDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/GetTopInsertData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllUpdateDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/GetTopUpdateData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllGetDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/GetTopGetData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllDeleteDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/GetTopDeleteData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion getall function
+
+        #region AJAX Function
+        public async Task<JsonResult> ListNoSQLInsert(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ListNoSQLUpdate(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllUpdateDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ListNoSQLGet(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllGetDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ListNoSQLDelete(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllDeleteDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        #endregion AJAX Function
+
     }
 }

@@ -37,6 +37,34 @@ function buttonPerfNoSQL() {
         })
 }
 
+function NoSQLInsertList() {
+    var TestCases = $('#dataAmount').val()
+    $("#tblNoSQLInsertList").DataTable({
+        "destroy": true,
+        "processing": true,
+        "pageLength": 5,
+        "ajax": {
+            "url": '/NoSQL/ListNoSQLInsert',
+            "data": { TestCases: TestCases },
+        },
+        "columns": [
+            { data: 'id', visible: false },
+            { data: 'dataProcessed' },
+            { data: 'hours' },
+            { data: 'minutes' },
+            { data: 'seconds' },
+            { data: 'miliSeconds' },
+            { data: 'averageTime' },
+        ],
+        "order": [[0, "desc"]],
+        "paging": true,
+        "pagingType": "simple_numbers",
+        "searching": false,
+        "info": false
+    });
+}
+
+
 $("#buttonPerfUpdateNoSQL").click(function () {
     if ($('#dataAmount').val() == null) {
         alert("Please choose valid data amount")
@@ -151,3 +179,9 @@ function buttonPerfDeleteNoSQL() {
             $('#perfresults').html('Average Time : ' + data.averageTime);
         })
 }
+$(document).ready(function () {
+    $('#dataAmount').val(1000);
+  //  NoSQLInsertList();
+    $('#dataAmount').val(null);
+});
+

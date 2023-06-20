@@ -34,7 +34,8 @@ namespace MasterUniversityFE.Controllers
                 _ApiPerformance = cfg.GetSection("APIURL:_ApiPerformance").Value;
             }
         }
-        #region function
+
+        #region Function
         [HttpPost]
         public async Task<IActionResult> SQLPerformance(int TestCases)
         {
@@ -166,7 +167,9 @@ namespace MasterUniversityFE.Controllers
             return View();
         }
 
-#endregion 
+
+        #endregion
+
         #region Performance Comparison
         private async Task<HttpResponseMessage> PerformanceComparisonAsync(int TestCases)
         {
@@ -176,7 +179,7 @@ namespace MasterUniversityFE.Controllers
                 var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
                 var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
                 using HttpClient httpClient = new HttpClient();
-                return response = await httpClient.PostAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/testInsert/" + TestCases),content);
+                return response = await httpClient.PostAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/testInsert/" + TestCases), content);
             }
             catch (Exception ex)
             {
@@ -229,5 +232,150 @@ namespace MasterUniversityFE.Controllers
             }
         }
         #endregion
+
+
+        #region getall function
+        public async Task<HttpResponseMessage> GetAllDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/GetTopInsertData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllUpdateDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/GetTopUpdateData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllGetDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/GetTopGetData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<HttpResponseMessage> GetAllDeleteDataAsync(int TestCases)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(TestCases, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/GetTopDeleteData/" + TestCases));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion getall function
+
+        #region AJAX Function
+        public async Task<JsonResult> ListSQLInsert(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ListSQLUpdate(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllUpdateDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ListSQLGet(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllGetDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ListSQLDelete(int TestCases)
+        {
+            try
+            {
+                List<TestResult> list = new List<TestResult>();
+                HttpResponseMessage apiResponse = await GetAllDeleteDataAsync(TestCases);
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<TestResult>>(listJSON);
+                }
+                return Json(new { data = list });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        #endregion AJAX Function
     }
 }

@@ -20,7 +20,8 @@
                     <option value="100000">100000</option>
                     </select>
                   <div>
-                <button id="buttonPerfNoSQL" type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light" onclick="buttonPerfSQL">Submit</button>
+                      <br />
+                <button id="buttonPerfNoSQL" type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light" onclick="buttonPerfNoSQL">Submit</button>
                 </div>
                 <div id="perfresultsdata"> </div>
                 <div id="perfresultshour"> </div>
@@ -28,6 +29,25 @@
                 <div id="perfresultssec"> </div>
                 <div id="perfresultsmilisec"> </div>
                 <div id="perfresults"> </div>
+                                <br />
+                <div class="table-responsive table-editable">
+                    <table id="tblNoSQLInsertList" class="table table-hover nowrap text-left" width="100%" aria-hidden="true">
+                        <thead>
+                            <tr>
+                                <th scope="col" hidden></th>
+                                <th scope="col">Data Processed </th>
+                                <th scope="col">Hours</th>
+                                <th scope="col">Minutes</th>
+                                <th scope="col">Seconds</th>
+                                <th scope="col">MiliSeconds</th>
+                                <th scope="col">Average Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
