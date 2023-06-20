@@ -35,7 +35,7 @@ function buttonPerfGetNoSQL() {
             $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
             $('#perfresults').html('Average Time : ' + data.averageTime);
         })
-    SQLGetList();
+    NoSQLGetList();
 }
 function NoSQLGetList() {
     var TestCases = $('#dataAmount').val()

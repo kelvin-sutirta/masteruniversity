@@ -35,6 +35,7 @@ function buttonPerfNoSQL() {
             $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
             $('#perfresults').html('Average Time : ' + data.averageTime);
         })
+    NoSQLInsertList();
 }
 
 function NoSQLInsertList() {
@@ -181,7 +182,7 @@ function buttonPerfDeleteNoSQL() {
 }
 $(document).ready(function () {
     $('#dataAmount').val(1000);
-  //  NoSQLInsertList();
+   NoSQLInsertList();
     $('#dataAmount').val(null);
 });
 
