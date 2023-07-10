@@ -10,7 +10,6 @@ namespace MasterUniversityFE.Controllers
 {
     public class SQLController : Controller
     {
-        public string _ApiPerformance;
         public IActionResult SQL()
         {
             return View();
@@ -26,13 +25,6 @@ namespace MasterUniversityFE.Controllers
         public IActionResult SQLDelete()
         {
             return View();
-        }
-        public void SQLBase(IConfiguration cfg)
-        {
-            if (cfg != null)
-            {
-                _ApiPerformance = cfg.GetSection("APIURL:_ApiPerformance").Value;
-            }
         }
 
         #region Function

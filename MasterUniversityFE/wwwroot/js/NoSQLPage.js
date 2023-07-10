@@ -19,15 +19,7 @@ function buttonPerfNoSQL() {
         async: false,
     })
         .done(function (data) {
-            console.log(data);
             JSON.stringify(data);
-            console.log(data.averageTime);
-            console.log(data.dataProcessed);
-            console.log(data.hours);
-            console.log(data.miliSeconds);
-            console.log(data.minutes);
-            console.log(data.seconds);
-
             $('#perfresultsdata').html('Data Processed : ' + data.dataProcessed);
             $('#perfresultshour').html('Hours : ' + data.hours);
             $('#perfresultsminute').html('Minutes : ' + data.minutes);
