@@ -40,6 +40,7 @@ function NoSQLGetList() {
             "data": { TestCases: TestCases },
         },
         "columns": [
+            { data: 'id', visible: false },
             { data: 'dataProcessed' },
             { data: 'hours' },
             { data: 'minutes' },
@@ -47,6 +48,7 @@ function NoSQLGetList() {
             { data: 'miliSeconds' },
             { data: 'averageTime' },
         ],
+        "order": [[0, "desc"]],
         "paging": true,
         "pagingType": "simple_numbers",
         "searching": false,

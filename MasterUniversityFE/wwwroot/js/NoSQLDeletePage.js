@@ -41,6 +41,7 @@ function NoSQLDeleteList() {
             "data": { TestCases: TestCases },
         },
         "columns": [
+            { data: 'id', visible: false },
             { data: 'dataProcessed' },
             { data: 'hours' },
             { data: 'minutes' },
@@ -48,6 +49,7 @@ function NoSQLDeleteList() {
             { data: 'miliSeconds' },
             { data: 'averageTime' },
         ],
+        "order": [[0, "desc"]],
         "paging": true,
         "pagingType": "simple_numbers",
         "searching": false,
