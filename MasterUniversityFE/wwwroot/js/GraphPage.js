@@ -6,12 +6,60 @@ $(document).ready(function () {
         url: '/Graph/GraphInsert',
         data: JSON.stringify({}),
         dataType: "json",
+        success: function (result) {
+            if (result.success) {
+                if (result.data.length > 0) {
+                    JSON.stringify(data);
+                }
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Critical', 'Major', 'Minor'],
+                        datasets: [{
+                            label: 'Based On Category',
+                            data: [critical, major, minor],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }, legend: {
+                            display: false
+                        }, title:
+                        {
+                            display: true,
+                            text: "Based On Category"
+                        }, animation: {
+                            onComplete: function () {
+                                chartImage = myChart.toBase64Image();
+                            }
+                        }
+                    }
+                });
+            }
+        },
+        error: function (error) {
+            $('#loadeux').css('display', 'none');
+            msgError(error);
+        }
+
+
     })
-        .done(function (data) {
-            JSON.stringify(data);
-
-        })
-
 });
 
 

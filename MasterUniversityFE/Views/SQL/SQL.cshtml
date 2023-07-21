@@ -6,6 +6,7 @@
 <p>This is SQL Insert Performance Page.</p>
 
 <div class="shadow-sm tbl-1 p-3 mb-5" style="background : #F1F1F1;">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div class="card card-custom">
         <div class="card">
             <!--Body-->
@@ -51,10 +52,20 @@
                         </tbody>
                     </table>
                 </div>
+                @*kasih border bagusin
+                kasih title*@
+                <div> <canvas id="myChart"> </canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                   <script>
+                        const ctx = document.getElementById('myChart');
+                    </script>
+                
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @section Scripts{
     <script type="text/javascript" src="~/js/SQLPage.js"></script>

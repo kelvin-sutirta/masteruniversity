@@ -29,5 +29,13 @@
 
     }
 
+    public class LineChartData
+    {
+        public double oneK { get; set; } = 0;
+        public double fiveK { get; set; } = 0;
+        public double tenK { get; set; } = 0;
+        public double fiftyK { get; set; } = 0;
+        public double hundredK { get; set; } = 0;
 
+    }
 }
