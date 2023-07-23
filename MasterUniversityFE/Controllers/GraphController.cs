@@ -24,38 +24,7 @@ namespace MasterUniversityFE.Controllers
         {
             return View();
         }
-        /*
-        public async Task<IActionResult> GraphInsert() // yang ini gw coba dari bikin sql command nya sendiri (nyoba dari youtube.
-        {
-            try
-            {
-                {
-                    HttpResponseMessage apiResponse;
-                    apiResponse = await InsertGraphAsync();
-                    if (apiResponse.StatusCode == HttpStatusCode.OK)
-                    {
-                        var JSON = (await apiResponse.Content.ReadAsStringAsync());
-                        var data = JsonConvert.DeserializeObject<>(JSON);
-
-                        if (data == null)
-                        {
-                            ViewData["Message"] = "Could not load data category";
-                        }
-                        else
-                        {
-                            return Json(data);
-                        }
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return View();
-        }*/
+ 
         /*
         public JsonResult GraphInsert()
         {
@@ -165,7 +134,144 @@ namespace MasterUniversityFE.Controllers
             };
         }
 
+        public async Task<JsonResult> GraphUpdate()
+        {
+            try
+            {
+                List<GraphData> list = new List<GraphData>();
+                HttpResponseMessage apiResponse = await UpdateGraphSQLAsync();
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<GraphData>>(listJSON);
+                }
+
+                List<GraphData> listNoSQL = new List<GraphData>();
+                HttpResponseMessage apiResponse2 = await UpdateGraphNoSQLAsync();
+                if (apiResponse2.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse2.Content.ReadAsStringAsync());
+                    listNoSQL = JsonConvert.DeserializeObject<List<GraphData>>(listJSON);
+                }
+                //prepare data
+                List<LineChartData> result = new List<LineChartData>();
+                LineChartData resultSQL = new LineChartData();
+                LineChartData resultNOSQL = new LineChartData();
+                //SQL
+                resultSQL.oneK = list.Where(x => x.DataAmount == 1000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.fiveK = list.Where(x => x.DataAmount == 5000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.tenK = list.Where(x => x.DataAmount == 10000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.fiftyK = list.Where(x => x.DataAmount == 50000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.hundredK = list.Where(x => x.DataAmount == 100000).FirstOrDefault().AveragePerformanceSpeed;
+                result.Add(resultSQL);
+                //NoSQL
+                resultNOSQL.oneK = listNoSQL.Where(x => x.DataAmount == 1000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.fiveK = listNoSQL.Where(x => x.DataAmount == 5000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.tenK = listNoSQL.Where(x => x.DataAmount == 10000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.fiftyK = listNoSQL.Where(x => x.DataAmount == 50000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.hundredK = listNoSQL.Where(x => x.DataAmount == 100000).FirstOrDefault().AveragePerformanceSpeed;
+                result.Add(resultNOSQL);
+
+                return Json(new { success = true, data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = true, Msg = ex.Message });
+            };
+        }
+        public async Task<JsonResult> GraphGet()
+        {
+            try
+            {
+                List<GraphData> list = new List<GraphData>();
+                HttpResponseMessage apiResponse = await GetGraphSQLAsync();
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<GraphData>>(listJSON);
+                }
+
+                List<GraphData> listNoSQL = new List<GraphData>();
+                HttpResponseMessage apiResponse2 = await GetGraphNoSQLAsync();
+                if (apiResponse2.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse2.Content.ReadAsStringAsync());
+                    listNoSQL = JsonConvert.DeserializeObject<List<GraphData>>(listJSON);
+                }
+                //prepare data
+                List<LineChartData> result = new List<LineChartData>();
+                LineChartData resultSQL = new LineChartData();
+                LineChartData resultNOSQL = new LineChartData();
+                //SQL
+                resultSQL.oneK = list.Where(x => x.DataAmount == 1000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.fiveK = list.Where(x => x.DataAmount == 5000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.tenK = list.Where(x => x.DataAmount == 10000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.fiftyK = list.Where(x => x.DataAmount == 50000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.hundredK = list.Where(x => x.DataAmount == 100000).FirstOrDefault().AveragePerformanceSpeed;
+                result.Add(resultSQL);
+                //NoSQL
+                resultNOSQL.oneK = listNoSQL.Where(x => x.DataAmount == 1000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.fiveK = listNoSQL.Where(x => x.DataAmount == 5000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.tenK = listNoSQL.Where(x => x.DataAmount == 10000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.fiftyK = listNoSQL.Where(x => x.DataAmount == 50000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.hundredK = listNoSQL.Where(x => x.DataAmount == 100000).FirstOrDefault().AveragePerformanceSpeed;
+                result.Add(resultNOSQL);
+
+                return Json(new { success = true, data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = true, Msg = ex.Message });
+            };
+        }
+
+        public async Task<JsonResult> GraphDelete()
+        {
+            try
+            {
+                List<GraphData> list = new List<GraphData>();
+                HttpResponseMessage apiResponse = await DeleteGraphSQLAsync();
+                if (apiResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse.Content.ReadAsStringAsync());
+                    list = JsonConvert.DeserializeObject<List<GraphData>>(listJSON);
+                }
+
+                List<GraphData> listNoSQL = new List<GraphData>();
+                HttpResponseMessage apiResponse2 = await DeleteGraphNoSQLAsync();
+                if (apiResponse2.StatusCode == HttpStatusCode.OK)
+                {
+                    var listJSON = (await apiResponse2.Content.ReadAsStringAsync());
+                    listNoSQL = JsonConvert.DeserializeObject<List<GraphData>>(listJSON);
+                }
+                //prepare data
+                List<LineChartData> result = new List<LineChartData>();
+                LineChartData resultSQL = new LineChartData();
+                LineChartData resultNOSQL = new LineChartData();
+                //SQL
+                resultSQL.oneK = list.Where(x => x.DataAmount == 1000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.fiveK = list.Where(x => x.DataAmount == 5000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.tenK = list.Where(x => x.DataAmount == 10000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.fiftyK = list.Where(x => x.DataAmount == 50000).FirstOrDefault().AveragePerformanceSpeed;
+                resultSQL.hundredK = list.Where(x => x.DataAmount == 100000).FirstOrDefault().AveragePerformanceSpeed;
+                result.Add(resultSQL);
+                //NoSQL
+                resultNOSQL.oneK = listNoSQL.Where(x => x.DataAmount == 1000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.fiveK = listNoSQL.Where(x => x.DataAmount == 5000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.tenK = listNoSQL.Where(x => x.DataAmount == 10000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.fiftyK = listNoSQL.Where(x => x.DataAmount == 50000).FirstOrDefault().AveragePerformanceSpeed;
+                resultNOSQL.hundredK = listNoSQL.Where(x => x.DataAmount == 100000).FirstOrDefault().AveragePerformanceSpeed;
+                result.Add(resultNOSQL);
+
+                return Json(new { success = true, data = result });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = true, Msg = ex.Message });
+            };
+        }
         // Yang bawah biasa buat ngambil ke API
+        #region GraphSQL
         private async Task<HttpResponseMessage> InsertGraphSQLAsync()
         {
             try
@@ -181,6 +287,54 @@ namespace MasterUniversityFE.Controllers
                 throw ex;
             }
         }
+        private async Task<HttpResponseMessage> UpdateGraphSQLAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/GetTopUpdateDataGraph"));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private async Task<HttpResponseMessage> DeleteGraphSQLAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/GetTopDeleteDataGraph"));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private async Task<HttpResponseMessage> GetGraphSQLAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:7218/" + "api/PerformanceComparison/GetTopGetDataGraph"));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        #region GraphNoSQL
 
         private async Task<HttpResponseMessage> InsertGraphNoSQLAsync()
         {
@@ -197,5 +351,51 @@ namespace MasterUniversityFE.Controllers
                 throw ex;
             }
         }
+        private async Task<HttpResponseMessage> UpdateGraphNoSQLAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/GetTopUpdateDataGraph"));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private async Task<HttpResponseMessage> DeleteGraphNoSQLAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/GetTopDeleteDataGraph"));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private async Task<HttpResponseMessage> GetGraphNoSQLAsync()
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var listJSON = System.Text.Json.JsonSerializer.Serialize(new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, WriteIndented = true });
+                var content = new StringContent(listJSON, Encoding.UTF8, "application/json");
+                using HttpClient httpClient = new HttpClient();
+                return response = await httpClient.GetAsync(new Uri("https://localhost:3489/" + "api/PerformanceComparison/GetTopGetDataGraph"));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
 }

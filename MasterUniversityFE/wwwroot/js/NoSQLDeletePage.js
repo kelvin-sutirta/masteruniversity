@@ -6,6 +6,7 @@ $("#buttonPerfDeleteNoSQL").click(function () {
     }
     else {
         buttonPerfDeleteNoSQL();
+        GetChart();
     }
 
 });
@@ -57,35 +58,101 @@ function NoSQLDeleteList() {
     });
 }
 
-/*function SQLInsertList() {
-    var TestCases = $('#dataAmount').val()
-    console.log(TestCases);
-    $("#tblSQLInsertList").DataTable({
-        "destroy": true,
-        "processing": true,
-        "searching": false,
-        "paging":false,
-        "ajax": {
-            "url": '/SQL/ListSQLInsert',
-            "type": "GET",
-            "data": { TestCases: TestCases },
-            "datatype": "json",
-            "datasrc":"",
+function GetChart() {
+    var formData = new FormData();
+    var onek = 0;
+    var fivek = 0;
+    var tenk = 0;
+    var fiftyk = 0;
+    var hundredk = 0;
+    var oneknosql = 0;
+    var fiveknosql = 0;
+    var tenknosql = 0;
+    var fiftyknosql = 0;
+    var hundredknosql = 0;
+    $.ajax({
+        method: "POST",
+        url: '/Graph/GraphDelete',
+        contentType: false,
+        processData: false,
+        data: formData,
+        dataType: "json",
+        success: function (result) {
+            if (result.success) {
+                onek = result.data[0].oneK;
+                fivek = result.data[0].fiveK;
+                tenk = result.data[0].tenK;
+                fiftyk = result.data[0].fiftyK;
+                hundredk = result.data[0].hundredK;
+
+                oneknosql = result.data[1].oneK;
+                fiveknosql = result.data[1].fiveK;
+                tenknosql = result.data[1].tenK;
+                fiftyknosql = result.data[1].fiftyK;
+                hundredknosql = result.data[1].hundredK;
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1.000', '5.000', '10.000', '50.000', '100.000'],
+                        datasets: [
+                            {
+                                label: 'MS SQL Server',
+                                data: [onek, fivek, tenk, fiftyk, hundredk],
+                                borderWidth: 2,
+                                pointBackgroundColor: [
+                                    'rgba(0, 0, 0, 0.79)'
+                                ],
+                                backgroundColor: [
+                                    'rgba(12, 92, 233, 0.79)'
+                                ],
+                                borderColor: [
+                                    'rgba(12, 92, 233, 0.79)'
+                                ]
+                            },
+                            {
+                                label: 'MongoDB',
+                                data: [oneknosql, fiveknosql, tenknosql, fiftyknosql, hundredknosql],
+                                borderWidth: 2,
+                                pointBackgroundColor: [
+                                    'rgba(0, 0, 0, 0.79)'
+                                ],
+                                backgroundColor: [
+                                    'rgba(15, 223, 104, 0.79)'
+                                ],
+                                borderColor: [
+                                    'rgba(0, 223, 104, 0.79)'
+                                ]
+                            }
+                        ],
+                    },
+                    options: {
+                        plugins:
+                        {
+                            title: {
+                                display: true,
+                                text: ' Delete MSSQLServer vs MongoDb',
+                                font:
+                                {
+                                    size: 30,
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+
+                    }
+                });
+            }
         },
-        "columns": [
-            { data: 'id' },
-            { data: 'hours' },
-            { data: 'minutes' },
-            { data: 'second' },
-            { data: 'miliseconds' },
-            { data: 'dataProcessed' },
-            { data: 'averageTime' },
-        ],
-        "paging": false,
-        "pageLength": 5,
+        error: function (error) {
+            $('#loadeux').css('display', 'none');
+            msgError(error);
+        }
     });
 }
-*/
 
 $(document).ready(function () {
     $('#dataAmount').val(1000);

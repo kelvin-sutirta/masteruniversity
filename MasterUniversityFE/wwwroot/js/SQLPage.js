@@ -1,36 +1,36 @@
 ﻿
 $("#buttonPerfSQL").click(function () {
-    //if ($('#dataAmount').val() == null) {
-    //    alert("Please choose valid data amount")
-    //}
-    //else {    
-    //    buttonPerfSQL();      
-    //}
-    GetChart();
-   
+    if ($('#dataAmount').val() == null) {
+        alert("Please choose valid data amount")
+    }
+    else {    
+        buttonPerfSQL();    
+        GetChart();
+    }
+
 });
 
 function buttonPerfSQL() {
-    //var TestCases = $('#dataAmount').val()
-    //console.log(TestCases);
-    //           $.ajax({
-    //                method: "POST",
-    //               url: '/SQL/SQLPerformance',
-    //               data: {TestCases: TestCases},
-    //               dataType: "json",
-    //               async : false,
-    //           })
-    //               .done(function (data) {
-    //                    JSON.stringify(data);
-    //                   $('#perfresultsdata').html('Data Processed : ' + data.dataProcessed);
-    //                   $('#perfresultshour').html('Hours : ' + data.hours);
-    //                   $('#perfresultsminute').html('Minutes : ' + data.minutes);
-    //                   $('#perfresultssec').html('Seconds : ' + data.seconds);
-    //                   $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
-    //                   $('#perfresults').html('Average Time : ' + data.averageTime);
-    //               })
+    var TestCases = $('#dataAmount').val()
+    console.log(TestCases);
+               $.ajax({
+                    method: "POST",
+                  url: '/SQL/SQLPerformance',
+                  data: {TestCases: TestCases},
+                   dataType: "json",
+                   async : false,
+               })
+                  .done(function (data) {
+                       JSON.stringify(data);
+                      $('#perfresultsdata').html('Data Processed : ' + data.dataProcessed);
+                      $('#perfresultshour').html('Hours : ' + data.hours);
+                      $('#perfresultsminute').html('Minutes : ' + data.minutes);
+                      $('#perfresultssec').html('Seconds : ' + data.seconds);
+                       $('#perfresultsmilisec').html('MiliSeconds : ' + data.miliSeconds);
+                      $('#perfresults').html('Average Time : ' + data.averageTime);
+                  })
     GetChart();
-    //SQLInsertList();
+    SQLInsertList();
 }
 function SQLInsertList() {
     var TestCases = $('#dataAmount').val()
@@ -66,15 +66,11 @@ function GetChart() {
     var tenk = 0;
     var fiftyk = 0;
     var hundredk = 0;
-
     var oneknosql = 0;
     var fiveknosql = 0;
     var tenknosql = 0;
     var fiftyknosql = 0;
     var hundredknosql = 0;
-
-
-
     $.ajax({
         method: "POST",
         url: '/Graph/GraphInsert',
@@ -101,7 +97,7 @@ function GetChart() {
                         labels: ['1.000', '5.000', '10.000', '50.000', '100.000'],
                         datasets: [
                             {
-                                label: 'Insert MS SQL Server',
+                                label: 'MS SQL Server',
                                 data: [onek, fivek, tenk, fiftyk, hundredk],
                                 borderWidth: 2,
                                 pointBackgroundColor: [
@@ -115,7 +111,7 @@ function GetChart() {
                                 ]
                             },
                             {
-                                label: 'Insert MongoDB',
+                                label: 'MongoDB',
                                 data: [oneknosql, fiveknosql, tenknosql, fiftyknosql, hundredknosql],
                                 borderWidth: 2,
                                 pointBackgroundColor: [
@@ -125,17 +121,29 @@ function GetChart() {
                                     'rgba(15, 223, 104, 0.79)'
                                 ],
                                 borderColor: [
-                                    'rgba(15, 223, 104, 0.79)'
+                                    'rgba(0, 223, 104, 0.79)'
                                 ]
                             }
                         ],
                     },
                     options: {
+                        plugins:
+                        {
+                            title: {
+                                display: true,
+                                text: ' Insert MSSQLServer vs MongoDb',
+                                font:
+                                {
+                                    size: 30,
+                                }
+                            }
+                        },
                         scales: {
                             y: {
                                 beginAtZero: true
                             }
                         }
+                        
                     }
                 });
             }
@@ -150,7 +158,6 @@ function GetChart() {
 
 
 $(document).ready(function () {
-    GetChart();
     $('#dataAmount').val(1000);
     SQLInsertList();
     $('#dataAmount').val(null);
